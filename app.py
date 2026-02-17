@@ -1,29 +1,28 @@
 import streamlit as st
+import pandas as pd
 
-# The clean, working Place ID link
+st.set_page_config(page_title="Easy Group Reviews", page_icon="⭐")
+
+# Corrected URL with Review Intent flag
 PLACE_ID = "ChIJu5DwTEWgwzsRi9vx9n8nwxI"
-# This version triggers the 5-star UI without the 404 error
-GOOGLE_URL = "https://search.google.com/local/writereview?placeid=ChIJu5DwTEWgwzsRi9vx9n8nwxI&rciv=1"
+GOOGLE_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID}&rciv=1"
 
-st.set_page_config(page_title="Review Us", page_icon="⭐")
+st.title("Support Easy Group ⭐")
+st.write("Tap a review to copy it, then click the button!")
 
-st.title("Share Your Feedback")
-st.write("Select your service to get a suggested review:")
-
-# Segment options
 segments = {
-    "Easy Clean": "The best cleaning materials and housekeeping supplies. Very effective products!",
-    "Easy Smart": "Excellent range of home and kitchen appliances. High quality and reliable.",
-    "Easy Trans Link": "Professional transport and logistics services. Everything arrived on time.",
-    "GE-Tech Engineering": "Expert engineering and solar solutions. Very knowledgeable team."
+    "🧼 Easy Clean": "Excellent housekeeping materials and cleaning chemicals. Very effective!",
+    "🍳 Easy Smart": "Great quality kitchen appliances and electronics. Very satisfied with the purchase.",
+    "🚚 Easy Trans Link": "Reliable transport and import-export services. Very professional handling.",
+    "☀️ GE-Tech": "Top-tier solar and engineering solutions. Highly recommend their expertise."
 }
 
-# Display buttons
-for name, review_text in segments.items():
-    with st.expander(f"Click for {name} Review"):
-        st.write(f"**Suggested Text:** {review_text}")
-        # A simple button to open the link
-        st.link_button(f"Write 5-Star Review for {name}", GOOGLE_URL, use_container_width=True)
+for name, text in segments.items():
+    with st.container(border=True):
+        st.subheader(name)
+        # This code box makes it easy for customers to tap and copy on mobile
+        st.code(text, language=None) 
+        st.link_button(f"Submit 5-Star Review", GOOGLE_URL, use_container_width=True)
 
 st.divider()
-st.caption("Thank you for supporting our local business!")
+st.info("The 5-star rating is selected by default for your convenience.")
