@@ -1,28 +1,27 @@
 import streamlit as st
-import pandas as pd
 
-st.set_page_config(page_title="Easy Group Reviews", page_icon="⭐")
-
-# Corrected URL with Review Intent flag
+# The most stable link for Google Reviews
 PLACE_ID = "ChIJu5DwTEWgwzsRi9vx9n8nwxI"
-GOOGLE_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID}&rciv=1"
+GOOGLE_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID}"
 
-st.title("Support Easy Group ⭐")
-st.write("Tap a review to copy it, then click the button!")
+st.set_page_config(page_title="Easy Group Review", page_icon="⭐")
 
-segments = {
-    "🧼 Easy Clean": "Excellent housekeeping materials and cleaning chemicals. Very effective!",
-    "🍳 Easy Smart": "Great quality kitchen appliances and electronics. Very satisfied with the purchase.",
-    "🚚 Easy Trans Link": "Reliable transport and import-export services. Very professional handling.",
-    "☀️ GE-Tech": "Top-tier solar and engineering solutions. Highly recommend their expertise."
+st.header("Select Your Service")
+
+# Specific reviews for your segments
+reviews = {
+    "Easy Clean": "Excellent quality cleaning chemicals and housekeeping materials. Highly recommended!",
+    "Easy Smart": "Great range of home and kitchen appliances. Very satisfied with the service.",
+    "Easy Trans Link": "Professional transport and logistics services. Very reliable!",
+    "GE-Tech Engineering": "Expert solar and engineering solutions. Top-tier stockist and service."
 }
 
-for name, text in segments.items():
+# Create a clean UI for the customer
+for segment, text in reviews.items():
     with st.container(border=True):
-        st.subheader(name)
-        # This code box makes it easy for customers to tap and copy on mobile
-        st.code(text, language=None) 
-        st.link_button(f"Submit 5-Star Review", GOOGLE_URL, use_container_width=True)
+        st.subheader(segment)
+        # st.code makes the text "Tap to Copy" on most mobile devices
+        st.code(text, language=None)
+        st.link_button("⭐⭐⭐⭐⭐ Open Google & Paste", GOOGLE_URL, use_container_width=True)
 
-st.divider()
-st.info("The 5-star rating is selected by default for your convenience.")
+st.caption("Step 1: Tap the text to copy. Step 2: Tap the button and paste!")
