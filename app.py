@@ -2,7 +2,8 @@ import streamlit as st
 
 # The clean, working Place ID link
 PLACE_ID = "ChIJu5DwTEWgwzsRi9vx9n8nwxI"
-GOOGLE_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID}"
+# This version triggers the 5-star UI without the 404 error
+GOOGLE_URL = "https://search.google.com/local/writereview?placeid=ChIJu5DwTEWgwzsRi9vx9n8nwxI&rciv=1"
 
 st.set_page_config(page_title="Review Us", page_icon="⭐")
 
