@@ -1,37 +1,28 @@
 import streamlit as st
-import random
+from streamlit_extras.stylable_container import stylable_container
 
-# List of pre-set reviews for your segments
-reviews = [
-    "Highly impressed with the Easy Clean housekeeping materials. Top quality!",
-    "GE-Tech Engineering provided excellent solar solutions. Very professional.",
-    "The Easy Smart kitchen appliances are modern and work perfectly.",
-    "Easy Trans Link made our transport logistics so much smoother. Great service!",
-    "Best place for industrial cleaning chemicals. Highly recommended!",
-    "Great experience with GE-Tech for our mechanical engineering needs."
-]
+# Place ID for your business
+PLACE_ID = "ChIJu5DwTEWgwzsRi9vx9n8nwxI"
+GOOGLE_REVIEW_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID},5"
 
-st.set_page_config(page_title="Review Us!", page_icon="⭐")
+# Reviews categorized by your business segments
+review_options = {
+    "Easy Clean (Housekeeping)": "Top-notch cleaning materials and chemicals. Highly recommended for quality!",
+    "Easy Smart (Appliances)": "Great range of home and kitchen appliances. Excellent service and support.",
+    "Easy Trans Link (Logistics)": "Reliable transport and import/export services. Very professional team!",
+    "GE-Tech Engineering (Solar)": "Expert solar and mechanical engineering solutions. High quality stockist."
+}
 
-st.title("Thank you for choosing us!")
-st.subheader("We value your feedback.")
+st.title("Quick 5-Star Review ⭐")
+st.write("Pick your service, tap to copy, and paste on Google!")
 
-# Generate a random review for this session
-if 'random_review' not in st.session_state:
-    st.session_state.random_review = random.choice(reviews)
-
-st.info(f"**Suggested Review:**\n\n{st.session_state.random_review}")
-
-# Instruction for the user
-st.write("1. Copy the text above.")
-st.write("2. Click the button below.")
-st.write("3. Paste and Submit!")
-
-# The magic 5-star link
-google_url = "https://search.google.com/local/writereview?placeid=ChIJu5DwTEWgwzsRi9vx9n8nwxI,5"
-
-st.link_button("⭐⭐⭐⭐⭐ Leave a 5-Star Review", google_url, use_container_width=True)
-
-if st.button("Get a different suggestion"):
-    st.session_state.random_review = random.choice(reviews)
-    st.rerun()
+# Create buttons for each segment
+for segment, text in review_options.items():
+    with stylable_container(key=segment, css_styles="button { background-color: #f0f2f6; }"):
+        if st.button(f"Review for {segment}"):
+            # This uses a JavaScript hack to copy to clipboard and then open the link
+            st.code(text, language=None) # Shows the text clearly for a manual tap-and-hold
+            st.success("Text shown above! Now click the button below to paste.")
+            
+            # The direct link button
+            st.link_button("Go to Google Maps", GOOGLE_REVIEW_URL, use_container_width=True)
