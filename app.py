@@ -1,28 +1,28 @@
 import streamlit as st
-from streamlit_extras.stylable_container import stylable_container
 
-# Place ID for your business
+# The clean, working Place ID link
 PLACE_ID = "ChIJu5DwTEWgwzsRi9vx9n8nwxI"
-GOOGLE_REVIEW_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID},5"
+GOOGLE_URL = f"https://search.google.com/local/writereview?placeid={PLACE_ID}"
 
-# Reviews categorized by your business segments
-review_options = {
-    "Easy Clean (Housekeeping)": "Top-notch cleaning materials and chemicals. Highly recommended for quality!",
-    "Easy Smart (Appliances)": "Great range of home and kitchen appliances. Excellent service and support.",
-    "Easy Trans Link (Logistics)": "Reliable transport and import/export services. Very professional team!",
-    "GE-Tech Engineering (Solar)": "Expert solar and mechanical engineering solutions. High quality stockist."
+st.set_page_config(page_title="Review Us", page_icon="⭐")
+
+st.title("Share Your Feedback")
+st.write("Select your service to get a suggested review:")
+
+# Segment options
+segments = {
+    "Easy Clean": "The best cleaning materials and housekeeping supplies. Very effective products!",
+    "Easy Smart": "Excellent range of home and kitchen appliances. High quality and reliable.",
+    "Easy Trans Link": "Professional transport and logistics services. Everything arrived on time.",
+    "GE-Tech Engineering": "Expert engineering and solar solutions. Very knowledgeable team."
 }
 
-st.title("Quick 5-Star Review ⭐")
-st.write("Pick your service, tap to copy, and paste on Google!")
+# Display buttons
+for name, review_text in segments.items():
+    with st.expander(f"Click for {name} Review"):
+        st.write(f"**Suggested Text:** {review_text}")
+        # A simple button to open the link
+        st.link_button(f"Write 5-Star Review for {name}", GOOGLE_URL, use_container_width=True)
 
-# Create buttons for each segment
-for segment, text in review_options.items():
-    with stylable_container(key=segment, css_styles="button { background-color: #f0f2f6; }"):
-        if st.button(f"Review for {segment}"):
-            # This uses a JavaScript hack to copy to clipboard and then open the link
-            st.code(text, language=None) # Shows the text clearly for a manual tap-and-hold
-            st.success("Text shown above! Now click the button below to paste.")
-            
-            # The direct link button
-            st.link_button("Go to Google Maps", GOOGLE_REVIEW_URL, use_container_width=True)
+st.divider()
+st.caption("Thank you for supporting our local business!")
